@@ -1,3 +1,5 @@
+using System.Net.Http.Json;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace CityApp;
@@ -16,5 +18,9 @@ public class CityApiTest : IClassFixture<WebApplicationFactory<Program>>
    {
       var response = await _client.GetAsync("city/granada");
       response.EnsureSuccessStatusCode();
+
+      var city = await response.Content.ReadFromJsonAsync<City>();
+
+      city?.Name.Should().Be("Granada");
    }
 }
