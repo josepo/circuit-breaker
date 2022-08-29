@@ -1,14 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace City.Controllers;
+namespace CityApp;
 
 [ApiController]
 [Route("[controller]")]
 public class CityController : ControllerBase
 {
-   [HttpGet("{name}")]
-   public ActionResult Get([FromRoute] string name)
+   private readonly ICityRepository _cityRepository;
+
+   public CityController(ICityRepository cityRepository)
    {
-      return Ok();
+      _cityRepository = cityRepository;
+   }
+
+   [HttpGet("{name}")]
+   public async Task<ActionResult> Get([FromRoute] string name)
+   {
+      var response = await _cityRepository.Get(name);
+
+      if (response.IsNone)
+         return NotFound();
+
+      return Ok((City)response);
    }
 }

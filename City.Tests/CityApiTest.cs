@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace City.Tests;
+namespace CityApp;
 
 public class CityApiTest : IClassFixture<WebApplicationFactory<Program>>
 {
