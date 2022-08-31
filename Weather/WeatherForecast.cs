@@ -2,11 +2,11 @@ namespace Weather;
 
 public class WeatherForecast
 {
-   public double Temperature { get; private set; }
+   public int Temperature { get; private set; }
 
-   public double ChanceOfRain { get; private set; }
+   public int ChanceOfRain { get; private set; }
 
-   private WeatherForecast(double temperature, double chanceOfRain)
+   private WeatherForecast(int temperature, int chanceOfRain)
    {
       Temperature = temperature;
       ChanceOfRain = chanceOfRain;
@@ -14,6 +14,12 @@ public class WeatherForecast
 
    public static WeatherForecast Random()
    {
-      return new WeatherForecast(0, 0);
+      var random = new Random();
+
+      return new WeatherForecast
+      (
+         random.Next(-20, 45),
+         random.Next(0, 100)
+      );
    }
 }
