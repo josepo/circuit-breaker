@@ -9,21 +9,32 @@ public interface ICityRepository
 
 public class CityRepository : ICityRepository
 {
+   private readonly IWeatherHttpClient _weatherClient;
+
    private readonly List<City> _cities = new List<City>
    {
       new City { Id = 4, Name = "Granada" },
       new City { Id = 7, Name = "Zaragoza" }
    };
 
-   public Task<Option<City>> Get(string name)
+   public CityRepository(IWeatherHttpClient weatherClient)
+   {
+      _weatherClient = weatherClient;
+   }
+
+   public async Task<Option<City>> Get(string name)
    {
       var city =
          _cities.FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
 
-      var result = city == null
-         ? Option<City>.None
-         : Option<City>.Some(city);
+      if (city == null)
+         return Option<City>.None;
 
-      return Task.FromResult(result);
+      var response = await _weatherClient.Get(name);
+
+      if (response.IsSuccessStatusCode)
+         city.WeatherForecast = await response.Content.ReadFromJsonAsync<WeatherForecast>();
+
+      return city;
    }
 }
