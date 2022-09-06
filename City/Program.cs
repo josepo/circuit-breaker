@@ -11,8 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 
-builder.Services.AddHttpClient<IWeatherHttpClient, WeatherHttpClient>(
-   options => options.BaseAddress = new Uri("http://localhost:5216"));
+builder.Services.AddHttpClient<IWeatherHttpClient, WeatherHttpClient>(options =>
+   options.BaseAddress = new Uri("http://localhost:5216/api/"));
 
 var app = builder.Build();
 

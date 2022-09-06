@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CityApp;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class CityController : ControllerBase
 {
    private readonly ICityRepository _cityRepository;
