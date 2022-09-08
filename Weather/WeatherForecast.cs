@@ -6,20 +6,11 @@ public class WeatherForecast
 
    public int ChanceOfRain { get; private set; }
 
-   private WeatherForecast(int temperature, int chanceOfRain)
-   {
-      Temperature = temperature;
-      ChanceOfRain = chanceOfRain;
-   }
-
-   public static WeatherForecast Random()
+   public WeatherForecast()
    {
       var random = new Random();
 
-      return new WeatherForecast
-      (
-         random.Next(-20, 45),
-         random.Next(0, 100)
-      );
+      Temperature = random.Next(-20, 45);
+      ChanceOfRain = random.Next(0, 100);
    }
 }

@@ -6,18 +6,14 @@ namespace Weather.Controllers;
 [Route("api/[controller]")]
 public class WeatherController : ControllerBase
 {
-
    [HttpGet("{cityName}")]
    public ActionResult<WeatherForecast> Get([FromRoute] string cityName)
    {
       if (RandomFail())
-         Thread.Sleep(TimeSpan.FromMinutes(5));
+         Thread.Sleep(TimeSpan.FromMinutes(2));
 
-      return Ok(WeatherForecast.Random());
+      return Ok(new WeatherForecast());
    }
 
-   private bool RandomFail()
-   {
-      return new Random().NextDouble() < 0.8;
-   }
+   private bool RandomFail() => new Random().NextDouble() < 0.2;
 }

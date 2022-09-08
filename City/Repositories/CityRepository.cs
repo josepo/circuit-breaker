@@ -30,11 +30,22 @@ public class CityRepository : ICityRepository
       if (city == null)
          return Option<City>.None;
 
-      var response = await _weatherClient.Get(name);
+      try
+      {
+         var response = await _weatherClient.Get(name);
 
-      if (response.IsSuccessStatusCode)
-         city.WeatherForecast = await response.Content.ReadFromJsonAsync<WeatherForecast>();
+         if (response.IsSuccessStatusCode)
+            city.WeatherForecast = await ReadForecast(response.Content);
+      }
+      catch (TaskCanceledException) { }
 
       return city;
+   }
+
+   private async Task<WeatherForecast> ReadForecast(HttpContent content)
+   {
+      var forecast = await content.ReadFromJsonAsync<WeatherForecast>();
+
+      return forecast ?? new WeatherForecast();
    }
 }
