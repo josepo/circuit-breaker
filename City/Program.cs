@@ -1,4 +1,5 @@
 using CityApp;
+using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 
-builder.Services.AddHttpClient<IWeatherHttpClient, WeatherHttpClient>(options =>
-   options.BaseAddress = new Uri("http://localhost:5216/api/"));
+builder.Services
+   .AddHttpClient<IWeatherHttpClient, WeatherHttpClient>(options =>
+      options.BaseAddress = new Uri("http://localhost:5216/api/"))
+   .AddPolicyHandler(
+      Policy
+         .Handle<TaskCanceledException>()
+         .CircuitBreakerAsync(1, TimeSpan.FromMinutes(2))
+         .AsAsyncPolicy<HttpResponseMessage>());
 
 var app = builder.Build();
 

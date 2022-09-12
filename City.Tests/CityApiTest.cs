@@ -30,14 +30,18 @@ public class CityApiTest : IClassFixture<WebApplicationFactory<Program>>, IDispo
          .Given(
             Request
             .Create()
-            .WithPath("/weather/granada").UsingGet())
+            .WithPath("/api/weather/granada").UsingGet())
          .RespondWith(
             Response
             .Create()
             .WithStatusCode(200)
-            .WithBodyAsJson(new WeatherForecast { Temperature = 25, ChanceOfRain = 10 }));
+            .WithBodyAsJson(new WeatherForecast
+            {
+               Temperature = 25,
+               ChanceOfRain = 10
+            }));
 
-      var response = await _client.GetAsync("city/granada");
+      var response = await _client.GetAsync("api/city/granada");
       response.EnsureSuccessStatusCode();
 
       var city = await response.Content.ReadFromJsonAsync<City>();

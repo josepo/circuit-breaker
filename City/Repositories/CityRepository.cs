@@ -1,4 +1,5 @@
 using LanguageExt;
+using Polly.CircuitBreaker;
 
 namespace CityApp;
 
@@ -37,7 +38,7 @@ public class CityRepository : ICityRepository
          if (response.IsSuccessStatusCode)
             city.WeatherForecast = await ReadForecast(response.Content);
       }
-      catch (TaskCanceledException) { }
+      catch (BrokenCircuitException) { }
 
       return city;
    }

@@ -31,7 +31,7 @@ public class CityRequests
       {
          Console.Write("Request started... ");
 
-         await Task.Delay(2000);
+         await Task.Delay(TimeSpan.FromSeconds(1));
          await req.Run();
 
          Console.WriteLine(req.ToString());

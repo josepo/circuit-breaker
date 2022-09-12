@@ -9,11 +9,8 @@ public class WeatherController : ControllerBase
    [HttpGet("{cityName}")]
    public ActionResult<WeatherForecast> Get([FromRoute] string cityName)
    {
-      if (RandomFail())
-         Thread.Sleep(TimeSpan.FromMinutes(2));
+      Thread.Sleep(TimeSpan.FromMinutes(2));
 
       return Ok(new WeatherForecast());
    }
-
-   private bool RandomFail() => new Random().NextDouble() < 0.2;
 }
