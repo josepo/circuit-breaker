@@ -22,7 +22,7 @@ public class CityRequest
 
       try
       {
-         await _httpClient.GetAsync("city/zaragoza");
+         await _httpClient.GetAsync("city/madrid");
 
          Status = Status.Success;
       }
