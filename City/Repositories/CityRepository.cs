@@ -1,4 +1,5 @@
 using LanguageExt;
+using Polly.CircuitBreaker;
 
 namespace CityApp;
 
@@ -37,11 +38,18 @@ public class CityRepository : ICityRepository
 
    private async Task<WeatherForecast?> GetForecast(string name)
    {
-      var response = await _weatherClient.Get(name);
+      try
+      {
+         var response = await _weatherClient.Get(name);
 
-      if (!response.IsSuccessStatusCode)
+         if (!response.IsSuccessStatusCode)
+            return null;
+
+         return await response.Content.ReadFromJsonAsync<WeatherForecast>();
+      }
+      catch (BrokenCircuitException)
+      {
          return null;
-
-      return await response.Content.ReadFromJsonAsync<WeatherForecast>();
+      }
    }
 }

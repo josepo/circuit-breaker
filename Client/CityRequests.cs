@@ -29,8 +29,6 @@ public class CityRequests
    {
       foreach (var req in _requests)
       {
-         Console.Write("Request started... ");
-
          await Task.Delay(TimeSpan.FromSeconds(1));
          await req.Run();
 

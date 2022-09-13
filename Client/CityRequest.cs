@@ -1,3 +1,5 @@
+using System.Net.Http.Json;
+
 namespace Client;
 
 public class CityRequest
@@ -5,6 +7,8 @@ public class CityRequest
    public Status Status { get; private set; }
 
    public double RunningTime { get; private set; }
+
+   public City? Response { get; private set; }
 
    private readonly HttpClient _httpClient;
 
@@ -22,9 +26,10 @@ public class CityRequest
 
       try
       {
-         await _httpClient.GetAsync("city/madrid");
+         var response = await _httpClient.GetAsync("city/madrid");
 
          Status = Status.Success;
+         Response = await response.Content.ReadFromJsonAsync<City>();
       }
       catch (TaskCanceledException)
       {
@@ -38,6 +43,6 @@ public class CityRequest
 
    public override string ToString()
    {
-      return $"{Status} in {RunningTime}ms";
+      return $"{Status} ({RunningTime}ms) {Response}";
    }
 }
