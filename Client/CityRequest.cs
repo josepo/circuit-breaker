@@ -31,7 +31,7 @@ public class CityRequest
          Status = Status.Success;
          Response = await response.Content.ReadFromJsonAsync<City>();
       }
-      catch (TaskCanceledException)
+      catch (Exception)
       {
          Status = Status.Fail;
       }

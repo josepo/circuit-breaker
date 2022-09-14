@@ -47,7 +47,7 @@ public class CityRepository : ICityRepository
 
          return await response.Content.ReadFromJsonAsync<WeatherForecast>();
       }
-      catch (BrokenCircuitException)
+      catch (Exception)
       {
          return null;
       }
