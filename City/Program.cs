@@ -17,7 +17,7 @@ builder.Services
       options.BaseAddress = new Uri("http://localhost:5216/api/"))
    .AddPolicyHandler(
       Policy
-         .Handle<TaskCanceledException>()
+         .Handle<OperationCanceledException>()
          .CircuitBreakerAsync(1, TimeSpan.FromMinutes(2))
          .AsAsyncPolicy<HttpResponseMessage>());
 
