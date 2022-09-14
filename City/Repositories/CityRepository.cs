@@ -14,8 +14,8 @@ public class CityRepository : ICityRepository
 
    private readonly List<City> _cities = new List<City>
    {
-      new City { Id = 4, Name = "Granada" },
-      new City { Id = 7, Name = "Madrid" }
+      new City { Id = 4, Name = "Granada", Population = "300k" },
+      new City { Id = 7, Name = "Madrid", Population = "3.2m" }
    };
 
    public CityRepository(IWeatherHttpClient weatherClient)
