@@ -17,6 +17,6 @@ public class WeatherController : ControllerBase
 
    private bool RandomFail()
    {
-      return new Random().NextDouble() < 0.5;
+      return new Random().NextDouble() < 0.3;
    }
 }
